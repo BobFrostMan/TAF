@@ -1,5 +1,17 @@
-# Compiled class file
-*.class
+# IntelliJ IDEA standard
+*.iml
+*.idea
+.idea
+
+# Compiled classes
+.class
+
+# Serialized objects
+*.ser
+
+# Local configurations
+local.properties
+*.txt
 
 # Log file
 *.log
