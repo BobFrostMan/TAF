@@ -35,9 +35,15 @@ public class SeleniumNodeRunner extends SeleniumGridRunner {
             System.setProperty("webdriver.chrome.driver", chromeDriverPath);
             //@link <a href="https://stackoverflow.com/questions/9884804/how-to-start-selenium-browser-with-proxy"/>
             //-browser "browserName=chrome,maxinstance=1,platform=WINDOWS" -Dwebdriver.chrome.driver=C:\Selenium\chromedriver.exe
-            process = CliUtils.execute(System.getenv("JAVA_HOME") + "/bin/java", "-Dwebdriver.chrome.driver=\""+chromeDriverPath+"\"", "-jar", file.getAbsolutePath(),
-                    "-role", "node", "-hub", "http://localhost:4444/grid/register", "-port", "5556",
-                    "-browser", "browserName=chrome,maxinstance=1,platform=WINDOWS");
+            /*
+                java -Dwebdriver.chrome.driver="../driver/bin/chromedriver.exe" -jar selenium-server-standalone-3.9.1.jar
+                -role webdriver -hub http://localhost:4444/grid/register -port 5556 -browser browserName=chrome,maxinstance=1,platform=WINDOWS
+             */
+
+            CliUtils.execute("cmd.exe", "/c", new File(DEFAULT_SELENIUM_PATH + "start-selenium-node.bat").getAbsolutePath());
+//            process = CliUtils.execute(System.getenv("JAVA_HOME") + "/bin/java",  "-jar", "-Dwebdriver.chrome.driver=\""+chromeDriverPath+"\"", file.getAbsolutePath(),
+//                    "-role", "webdriver", "-hub", "http://localhost:4444/grid/register", "-port", "5556",
+//                    "-browser", "browserName=chrome,version=ANY,platform=WINDOWS,maxInstances=5");
         } catch (IOException e) {
             throw new RunProcessException(e.getMessage());
         }

@@ -47,7 +47,9 @@ public class SeleniumGridRunner extends AbstractRunner{
         File file = new File(filePath);
         try {
             //@link <a href="https://stackoverflow.com/questions/9884804/how-to-start-selenium-browser-with-proxy"/>
-            process = CliUtils.runJarFile(file);//, "-port", "4444", "-role", "hub");
+            //java -jar selenium-server-standalone-3.9.1.jar -role hub
+            //process = CliUtils.runJarFile(file);//, "-port", "4444", "-role", "hub");
+            CliUtils.execute("cmd.exe", "/c", new File(DEFAULT_SELENIUM_PATH + "start-selenium-server.bat").getAbsolutePath());
         } catch (IOException e) {
             throw new RunProcessException(e.getMessage());
         }
@@ -62,10 +64,15 @@ public class SeleniumGridRunner extends AbstractRunner{
     }
 
     private void stopServer(){
-        if (process != null){
-            Logger.info("Terminating selenium server...");
-            CliUtils.terminate(process);
+        try {
+            HttpUtils.get("http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+//        if (process != null){
+//            Logger.info("Terminating selenium server...");
+//            CliUtils.terminate(process);
+//        }
     }
 
     protected String getSeleniumServerPath(){
