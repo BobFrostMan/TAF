@@ -10,14 +10,14 @@
     </appender>
 
     <appender name="file" class="org.apache.log4j.RollingFileAppender">
-        <param name="file" value="./logs/agilities_test_app.log"/>
+        <param name="file" value="./logs/test_app.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %5p [%t] - %m%n"/>
         </layout>
     </appender>
 
     <appender name="debugfile" class="org.apache.log4j.RollingFileAppender">
-        <param name="file" value="./logs/agilities_test_app_extended.log"/>
+        <param name="file" value="./logs/test_app_extended.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %5p [%t]{%x} - %m%n"/>
         </layout>

@@ -4,9 +4,7 @@ import com.ufo.core.utils.logging.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by FOG on 12.02.2018.
@@ -27,6 +25,13 @@ public class CliUtils {
         String[] commands = concatAll(commandArr, flags);
         ProcessBuilder pb = new ProcessBuilder(commands);
         pb.directory(new File(file.getParentFile().toURI()));
+        pb.inheritIO();
+        return pb.start();
+    }
+
+    public static Process execute(String ... commands) throws IOException {
+        Logger.info(Arrays.toString(commands));
+        ProcessBuilder pb = new ProcessBuilder(commands);
         pb.inheritIO();
         return pb.start();
     }

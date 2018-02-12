@@ -14,22 +14,31 @@ import java.net.URL;
  */
 public class SimpleTestWithSeleniumGrid extends TestBase {
 
-    private static final String browserType = "firefox";
+    private static final String browserType = "chrome";
 
     @Test
     public void simpleTest() throws MalformedURLException {
         //http://www.softwaretestinghelp.com/selenium-grid-selenium-tutorial-29/
-        DesiredCapabilities dr=null;
-        if(browserType.equals("firefox")){
+        DesiredCapabilities dr = null;
+        if (browserType.equals("firefox")) {
             dr=DesiredCapabilities.firefox();
             dr.setBrowserName("firefox");
             dr.setPlatform(Platform.WINDOWS);
-        }else{
+        }
+
+        if (browserType.equals("ie")) {
             dr=DesiredCapabilities.internetExplorer();
             dr.setBrowserName("iexplore");
             dr.setPlatform(Platform.WINDOWS);
         }
-        RemoteWebDriver driver=new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), dr);
+
+        if (browserType.equals("chrome")){
+            dr=DesiredCapabilities.chrome();
+            dr.setBrowserName("chrome");
+            dr.setPlatform(Platform.WINDOWS);
+        }
+
+        RemoteWebDriver driver=new RemoteWebDriver(new URL("http://192.168.22.146:4444/wd/hub"), dr);
         driver.navigate().to("http://gmail.com");
         driver.findElement(By.xpath("//input[@id='Email']")) .sendKeys("username");
         driver.findElement(By.xpath("//input[@id='Passwd']")) .sendKeys("password");

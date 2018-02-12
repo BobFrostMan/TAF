@@ -3,6 +3,7 @@ package example;
 import com.ufo.core.exception.RunProcessException;
 import com.ufo.core.runner.IRunner;
 import com.ufo.core.runner.impl.SeleniumGridRunner;
+import com.ufo.core.runner.impl.SeleniumNodeRunner;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -19,6 +20,7 @@ public class TestBase {
     public TestBase(){
         runners = new ArrayList<IRunner>();
         runners.add(new SeleniumGridRunner());
+        runners.add(new SeleniumNodeRunner());
     }
 
     @BeforeSuite
