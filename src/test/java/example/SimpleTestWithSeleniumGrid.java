@@ -17,7 +17,7 @@ public class SimpleTestWithSeleniumGrid extends TestBase {
 
     private static final String browserType = "chrome";
 
-    @Test
+    @Test(testName = "Test to check work with grid", description = "Some test description")
     public void simpleTest() throws MalformedURLException {
         //http://www.softwaretestinghelp.com/selenium-grid-selenium-tutorial-29/
         DesiredCapabilities dr = null;
@@ -39,7 +39,7 @@ public class SimpleTestWithSeleniumGrid extends TestBase {
             dr.setPlatform(Platform.WINDOWS);
         }
 
-        RemoteWebDriver driver=new RemoteWebDriver(new URL("http://192.168.22.146:4444/wd/hub"), dr);
+        RemoteWebDriver driver = new RemoteWebDriver(new URL("http://192.168.22.146:4444/wd/hub"), dr);
         driver.navigate().to("http://gmail.com");
         driver.findElement(By.xpath("//input[@id='Email']")) .sendKeys("username");
         driver.findElement(By.xpath("//input[@id='Passwd']")) .sendKeys("password");

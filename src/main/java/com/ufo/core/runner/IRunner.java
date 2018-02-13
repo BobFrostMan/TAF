@@ -1,7 +1,7 @@
 package com.ufo.core.runner;
 
 import com.ufo.core.exception.RunProcessException;
-import com.ufo.core.runner.entity.RunnerResult;
+import com.ufo.core.runner.bean.RunnerResult;
 
 /**
  * Created by FOG on 12.02.2018.

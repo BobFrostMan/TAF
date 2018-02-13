@@ -2,7 +2,7 @@ package com.ufo.core.runner.impl;
 
 import com.ufo.core.exception.RunProcessException;
 import com.ufo.core.runner.AbstractRunner;
-import com.ufo.core.runner.entity.RunnerResult;
+import com.ufo.core.runner.bean.RunnerResult;
 import com.ufo.core.utils.common.CliUtils;
 import com.ufo.core.utils.common.HttpUtils;
 import com.ufo.core.utils.logging.Logger;
