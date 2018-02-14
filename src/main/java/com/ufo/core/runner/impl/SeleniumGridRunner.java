@@ -19,7 +19,7 @@ public class SeleniumGridRunner extends AbstractRunner{
 
     protected static final String DEFAULT_SELENIUM_PATH = "src/main/resources/grid/";
     protected static final String DEFAULT_SELENIUM_SERVER_JAR_PATTERN = "selenium-server-standalone-%s.jar";
-    protected static final String DEFAULT_SELENIUM_SERVER_ENDPOINT = "http://localhost:4444/wd/hub/";
+    protected static final String DEFAULT_SELENIUM_SERVER_ENDPOINT = "http://localhost:4444/grid/console?config=true&configDebug=true";
 
     protected Process process;
 
@@ -49,7 +49,7 @@ public class SeleniumGridRunner extends AbstractRunner{
             //@link <a href="https://stackoverflow.com/questions/9884804/how-to-start-selenium-browser-with-proxy"/>
             //java -jar selenium-server-standalone-3.9.1.jar -role hub
             //process = CliUtils.runJarFile(file);//, "-port", "4444", "-role", "hub");
-            CliUtils.execute("cmd.exe", "/c", new File(DEFAULT_SELENIUM_PATH + "start-selenium-server.bat").getAbsolutePath());
+            CliUtils.execute(new File(DEFAULT_SELENIUM_PATH), "cmd.exe", "/c", new File(DEFAULT_SELENIUM_PATH + "start-selenium-server.bat").getAbsolutePath());
         } catch (IOException e) {
             throw new RunProcessException(e.getMessage());
         }
@@ -64,15 +64,15 @@ public class SeleniumGridRunner extends AbstractRunner{
     }
 
     private void stopServer(){
-        try {
-            HttpUtils.get("http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer");
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (process != null){
+            Logger.info("Terminating selenium server process...");
+            CliUtils.terminate(process);
+            try {
+                HttpUtils.get("http://localhost:4444/selenium-server/driver/?cmd=shutDownSeleniumServer");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-//        if (process != null){
-//            Logger.info("Terminating selenium server...");
-//            CliUtils.terminate(process);
-//        }
     }
 
     protected String getSeleniumServerPath(){

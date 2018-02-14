@@ -46,6 +46,7 @@ public abstract class AbstractRunner implements IRunner {
 
         while (attempts > 0) {
             attempts--;
+            WaitUtils.wait(interval);
             if (isFinished()) {
                 if (check()) {
                     return getResult();
@@ -54,7 +55,6 @@ public abstract class AbstractRunner implements IRunner {
                     throw new RunProcessException("Runner process wasn't finished successfully!");
                 }
             }
-            WaitUtils.wait(interval);
         }
         onFail();
         throw new RunProcessException("Runner process was failed by timeout!");

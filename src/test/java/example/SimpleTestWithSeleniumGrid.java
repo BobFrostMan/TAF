@@ -1,5 +1,6 @@
 package example;
 
+import com.ufo.core.utils.common.WaitUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.chrome.ChromeOptions;

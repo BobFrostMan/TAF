@@ -36,6 +36,15 @@ public class CliUtils {
         return pb.start();
     }
 
+    public static Process execute(File directory, String ... commands) throws IOException {
+        Logger.info(Arrays.toString(commands));
+        ProcessBuilder pb = new ProcessBuilder(commands);
+        pb.directory(directory);
+        pb.inheritIO();
+        return pb.start();
+    }
+
+
     /**
      * Terminates given system process
      *
