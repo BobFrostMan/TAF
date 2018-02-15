@@ -22,9 +22,9 @@ public class ReportListener implements ITestListener {
     private static final String FAILED = "FAILED";
     private static final String SKIPPED = "SKIPPED";
 
-    private RestReportClient client = new RestReportClient("http://localhost:8888", "/api");
+    private static ThreadLocal<Result> resultStorage = new ThreadLocal<>();
 
-    private Result result = new Result();
+    private RestReportClient client = new RestReportClient("http://localhost:8888", "/api");
 
     @Override
     public void onTestStart(ITestResult result) {
@@ -62,18 +62,21 @@ public class ReportListener implements ITestListener {
     }
 
     private void createResult(ITestResult res) {
-        result = new Result();
+        Result result = new Result();
         result.setMethodName(res.getMethod().getMethodName());
         result.setTestName(getTestName(res));
         result.setDescription(res.getMethod().getDescription());
+        resultStorage.set(result);
     }
 
     public void saveResult(ITestResult testResult) {
+        Result result = resultStorage.get();
         result.setParameters(testResult.getParameters());
         result.setStartTime(testResult.getStartMillis());
         result.setEndTime(testResult.getEndMillis());
         result.setResult(getStatus(testResult.getStatus()));
         result.setAdditionalInfo(getAdditionalInfo(testResult));
+        resultStorage.remove();
         client.save(result);
     }
 

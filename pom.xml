@@ -5,7 +5,7 @@
 
     <groupId>com.ufo</groupId>
     <artifactId>test-automation</artifactId>
-    <version>0.1</version>
+    <version>0.4</version>
     <name>ufo-automation-core</name>
     <description>Test automation core</description>
 
