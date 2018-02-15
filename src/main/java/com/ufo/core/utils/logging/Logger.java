@@ -3,7 +3,7 @@ package com.ufo.core.utils.logging;
 /**
  * Created by FOG on 12.02.2018.
  * <p>
- * Static class as alternative to Crate new Logger instance in each class you wan't to log
+ * Static class as alternative to create new Logger instance in each class you want to log
  * Class can be also adapted for TestNG reporter logging
  */
 public class Logger {

@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit;
 public class WaitUtils {
 
     /**
-     * Sleeps the thread for given time in seconds
+     * Sleeps current thread for given time in seconds
      *
-     * @param sec - seconds to sleep
+     * @param sec - seconds to wait
      */
     public static void wait(int sec) {
         try {

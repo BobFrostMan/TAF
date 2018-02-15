@@ -1,7 +1,7 @@
-package com.ufo.core.runner;
+package com.ufo.core.prepare;
 
-import com.ufo.core.exception.RunProcessException;
-import com.ufo.core.runner.bean.RunnerResult;
+import com.ufo.core.exception.PreparationFailedException;
+import com.ufo.core.prepare.bean.PreparationResult;
 import com.ufo.core.utils.common.WaitUtils;
 
 /**
@@ -10,7 +10,7 @@ import com.ufo.core.utils.common.WaitUtils;
  * Default runner process implementation.
  * Check if runner execution finished few times with given interval
  */
-public abstract class AbstractRunner implements IRunner {
+public abstract class AbstractRunner implements IPrepare {
 
     private static final int DEFAULT_ATTEMPTS_COUNT = 10;
     private static final int DEFAULT_WAIT_INTERVAL = 5;
@@ -31,17 +31,17 @@ public abstract class AbstractRunner implements IRunner {
     /**
      * Default implementation of fully configured runner
      * if runner doesn't executed successfully invokes on fail and
-     * throws RunProcessException
+     * throws PreparationFailedException
      *
      * @return runner result object
-     * @throws RunProcessException on failure
+     * @throws PreparationFailedException on failure
      */
-    public RunnerResult run() throws RunProcessException {
+    public PreparationResult run() throws PreparationFailedException {
         try {
             startProcess();
         } catch (Throwable t) {
             onFail();
-            throw new RunProcessException(t.getMessage());
+            throw new PreparationFailedException(t.getMessage());
         }
 
         while (attempts > 0) {
@@ -52,12 +52,12 @@ public abstract class AbstractRunner implements IRunner {
                     return getResult();
                 } else {
                     onFail();
-                    throw new RunProcessException("Runner process wasn't finished successfully!");
+                    throw new PreparationFailedException("Runner process wasn't finished successfully!");
                 }
             }
         }
         onFail();
-        throw new RunProcessException("Runner process was failed by timeout!");
+        throw new PreparationFailedException("Runner process was failed by timeout!");
     }
 
 }

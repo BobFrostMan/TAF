@@ -18,9 +18,9 @@ public class CliUtils {
     /**
      * Run jar file with local jdk, and returns it's process object
      *
-     * @return Process instance of executing process
+     * @return instance of executing process
      */
-    public static Process runJarFile(File file, String ... flags) throws IOException {
+    public static Process runJarFile(File file, String... flags) throws IOException {
         String[] commandArr = new String[]{PATH_TO_JAVA_EXEC, "-jar", file.getAbsolutePath()};
         String[] commands = concatAll(commandArr, flags);
         ProcessBuilder pb = new ProcessBuilder(commands);
@@ -29,18 +29,27 @@ public class CliUtils {
         return pb.start();
     }
 
-    public static Process execute(String ... commands) throws IOException {
-        Logger.info(Arrays.toString(commands));
-        ProcessBuilder pb = new ProcessBuilder(commands);
-        pb.inheritIO();
-        return pb.start();
+    public static Process execute(File directory, String... commands) throws IOException {
+        return execute(directory, false, commands);
     }
 
-    public static Process execute(File directory, String ... commands) throws IOException {
+    /**
+     * Creates process to execute given commands in specified directory.
+     * Shows process output in std output if silent set to false
+     *
+     * @param directory - directory to start command invocation
+     * @param silent - hides commands output if  set to true
+     * @param commands - commandline commands to be executed
+     * @return process object created for command execution
+     * @throws IOException if process can't be started
+     */
+    public static Process execute(File directory, boolean silent, String... commands) throws IOException {
         Logger.info(Arrays.toString(commands));
         ProcessBuilder pb = new ProcessBuilder(commands);
         pb.directory(directory);
-        pb.inheritIO();
+        if (!silent) {
+            pb.inheritIO();
+        }
         return pb.start();
     }
 
@@ -62,6 +71,14 @@ public class CliUtils {
         return process.exitValue();
     }
 
+    /**
+     * Concat arrays to a single array
+     *
+     * @param first - first array to concatenate
+     * @param rest - other arrays
+     * @param <T> - stands for any object type
+     * @return result of array concatenation
+     */
     private static <T> T[] concatAll(T[] first, T[]... rest) {
         int totalLength = first.length;
         for (T[] array : rest) {

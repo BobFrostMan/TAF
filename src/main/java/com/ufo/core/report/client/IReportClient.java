@@ -8,7 +8,7 @@ import java.util.Collection;
  * User: Maxim Zaverukha<br/>
  * Date: 13.02.2018<br/>
  * Time: 17:38<br/>
- *
+ * <p>
  * Client interface that defines primary report client functions
  */
 public interface IReportClient {

@@ -7,6 +7,9 @@ import java.util.Map;
  * User: Maxim Zaverukha<br/>
  * Date: 13.02.2018<br/>
  * Time: 11:15<br/>
+ * <p>
+ * Entity that represents common test execution result
+ * additionalInfo may be used as metadata storage
  */
 public class Result {
 
