@@ -63,7 +63,7 @@ public class SeleniumNodeRunner extends SeleniumGridRunner {
             CliUtils.terminate(process);
             try {
                 HttpUtils.get(DEFAULT_NODE_ADDRESS + SHUTDOWN_NODE_HOOK);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 Logger.error("Failed to stop Selenium node. Message: " + e.getMessage(), e);
             }
         }

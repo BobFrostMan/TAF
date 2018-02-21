@@ -1,13 +1,14 @@
-package com.ufo.core.report.client.impl;
+package com.ufo.core.report.client.impl.rest.bean;
 
 import com.ufo.core.report.bean.Result;
+import com.ufo.core.report.client.impl.rest.RestReportClient;
 
 /**
  * Created by FOG on 15.02.2018.
  *
  * Wrapper object for result object transformation according to specific RestReportClient
  *
- * @see com.ufo.core.report.client.impl.RestReportClient
+ * @see RestReportClient
  */
 public class RestResultWrapper {
 

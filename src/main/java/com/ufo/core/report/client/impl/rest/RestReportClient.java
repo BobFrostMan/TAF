@@ -1,4 +1,4 @@
-package com.ufo.core.report.client.impl;
+package com.ufo.core.report.client.impl.rest;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ufo.core.exception.NotSupportedYetException;
 import com.ufo.core.report.bean.Result;
 import com.ufo.core.report.client.IReportClient;
+import com.ufo.core.report.client.impl.rest.bean.RestResponse;
+import com.ufo.core.report.client.impl.rest.bean.RestResultWrapper;
 import com.ufo.core.utils.logging.Logger;
 import org.apache.http.HttpStatus;
 
@@ -45,7 +47,7 @@ public class RestReportClient implements IReportClient {
             objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             String jsonRes = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(resultWrapper);
             Logger.info(jsonRes);
-            Response response = post(address + apiUrl + SAVE_REPORT_API, jsonRes);
+            RestResponse response = post(address + apiUrl + SAVE_REPORT_API, jsonRes);
             if (response.getStatus() == HttpStatus.SC_OK) {
                 return true;
             } else {
@@ -61,7 +63,7 @@ public class RestReportClient implements IReportClient {
         throw new NotSupportedYetException("Save results in bulk are not implemented for RestReportClient yet!");
     }
 
-    private Response post(String endpoint, String payload) throws Exception {
+    private RestResponse post(String endpoint, String payload) throws Exception {
         URL url = new URL(endpoint);
         HttpURLConnection con = null;
         try {
@@ -85,7 +87,7 @@ public class RestReportClient implements IReportClient {
                     response.append(inputLine);
                 }
             }
-            return new Response(response.toString(), con.getResponseCode());
+            return new RestResponse(response.toString(), con.getResponseCode());
         } finally {
             if (con != null) {
                 con.disconnect();
@@ -93,38 +95,5 @@ public class RestReportClient implements IReportClient {
         }
     }
 
-    private class Response {
 
-        private int status;
-        private String content;
-
-        public Response(String content, int status) {
-            this.content = content;
-            this.status = status;
-        }
-
-        public int getStatus() {
-            return status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        @Override
-        public String toString() {
-            return "Response{" +
-                    "status=" + status +
-                    ", content='" + content + '\'' +
-                    '}';
-        }
-    }
 }

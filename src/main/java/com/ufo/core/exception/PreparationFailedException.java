@@ -5,10 +5,27 @@ package com.ufo.core.exception;
  * <p>
  * Common exception for all types of runners
  */
+@SuppressWarnings("unused")
 public class PreparationFailedException extends Exception {
+
+    public PreparationFailedException() {
+        super();
+    }
 
     public PreparationFailedException(String message) {
         super(message);
+    }
+
+    public PreparationFailedException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public PreparationFailedException(Throwable cause) {
+        super(cause);
+    }
+
+    public PreparationFailedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 
 }
