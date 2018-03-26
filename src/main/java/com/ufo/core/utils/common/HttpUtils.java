@@ -3,6 +3,7 @@ package com.ufo.core.utils.common;
 import com.ufo.core.utils.logging.Logger;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,11 +22,11 @@ public class HttpUtils {
      *
      * @param url - url to get content from
      * @return string representation content
-     * @throws Exception if url is corrupted or unreachable
+     * @throws IOException if url is corrupted or unreachable
      */
-    public static String get(String url) throws Exception {
+    public static String get(String url) throws IOException {
         URL urlObj = new URL(url);
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
         HttpURLConnection con = (HttpURLConnection) urlObj.openConnection();
         try {
             // optional default is GET

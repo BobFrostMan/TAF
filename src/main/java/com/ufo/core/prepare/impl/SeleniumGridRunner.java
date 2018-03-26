@@ -72,8 +72,8 @@ public class SeleniumGridRunner extends AbstractRunner {
             CliUtils.terminate(process);
             try {
                 HttpUtils.get(DEFAULT_SELENIUM_SERVER_HOST + SHUTDOWN_SELENIUM_SERVER_HOOK);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                Logger.error("Failed to stop selenium hub. Message: " + e.getMessage(), e);
             }
         }
     }

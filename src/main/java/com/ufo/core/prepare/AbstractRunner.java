@@ -39,25 +39,20 @@ public abstract class AbstractRunner implements IPrepare {
     public PreparationResult run() throws PreparationFailedException {
         try {
             startProcess();
-        } catch (Throwable t) {
+        } catch (PreparationFailedException ex) {
             onFail();
-            throw new PreparationFailedException(t.getMessage());
+            throw new PreparationFailedException(ex.getMessage());
         }
 
-        while (attempts > 0) {
-            attempts--;
+        for (int i = 0; i <= attempts; i++) {
             WaitUtils.wait(interval);
-            if (isFinished()) {
-                if (check()) {
-                    return getResult();
-                } else {
-                    onFail();
-                    throw new PreparationFailedException("Runner process wasn't finished successfully!");
-                }
+            if (isFinished() && check()) {
+                return getResult();
             }
         }
+
         onFail();
-        throw new PreparationFailedException("Runner process was failed by timeout!");
+        throw new PreparationFailedException("Runner process wasn't finished successfully!");
     }
 
 }
