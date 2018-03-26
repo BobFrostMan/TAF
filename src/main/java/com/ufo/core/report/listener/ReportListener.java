@@ -22,13 +22,11 @@ public class ReportListener implements ITestListener {
     private static final String FAILED = "FAILED";
     private static final String SKIPPED = "SKIPPED";
 
-    private static ThreadLocal<Result> resultStorage = new ThreadLocal<>();
-
     private RestReportClient client = new RestReportClient("http://localhost:8888", "/api");
 
     @Override
     public void onTestStart(ITestResult result) {
-        createResult(result);
+        //do nothing
     }
 
     @Override
@@ -61,29 +59,22 @@ public class ReportListener implements ITestListener {
         //bulk save can be implemented here
     }
 
-    private void createResult(ITestResult res) {
-        Result result = new Result();
-        result.setMethodName(res.getMethod().getMethodName());
-        result.setTestName(getTestName(res));
-        result.setDescription(res.getMethod().getDescription());
-        resultStorage.set(result);
-    }
-
     public void saveResult(ITestResult testResult) {
-        Result result = resultStorage.get();
+        Result result = new Result();
+        result.setMethodName(testResult.getMethod().getMethodName());
+        result.setTestName(getTestName(testResult));
+        result.setDescription(testResult.getMethod().getDescription());
         result.setParameters(testResult.getParameters());
         result.setStartTime(testResult.getStartMillis());
         result.setEndTime(testResult.getEndMillis());
         result.setResult(getStatus(testResult.getStatus()));
         result.setAdditionalInfo(getAdditionalInfo(testResult));
-        resultStorage.remove();
         client.save(result);
     }
 
-    @SuppressWarnings("all")
     private static String getTestName(ITestResult res) {
-        String testName = res.getMethod().getMethod().getAnnotation(Test.class).testName();
-        return testName.length() > 0 ? testName : "Unclassified test";
+        Test annotation = res.getMethod().getConstructorOrMethod().getMethod().getAnnotation(Test.class);
+        return annotation != null && annotation.testName().length() > 0 ? annotation.testName() : "Unclassified test";
     }
 
     private static String getStatus(int status) {
@@ -109,7 +100,7 @@ public class ReportListener implements ITestListener {
 
     private static String getStackTraceAsString(Throwable throwable) {
         StringBuilder builder = new StringBuilder("");
-        String nl = System.getProperty("line.separator");
+        String nl = System.lineSeparator();
         builder.append(nl);
         builder.append("    ");
         builder.append(throwable.toString());

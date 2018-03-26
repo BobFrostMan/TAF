@@ -78,7 +78,7 @@ public class RestReportClient implements IReportClient {
             int responseCode = con.getResponseCode();
             Logger.info("Sending 'POST' request to URL : " + endpoint);
             Logger.info("Response Code : " + responseCode);
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
